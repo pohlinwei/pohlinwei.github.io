@@ -2,16 +2,70 @@
 <html>
 <head>
     <title> Lin Wei </title>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 </head>
 <body>
-    <div class="wrapper">
-    <div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse venenatis turpis at lorem accumsan, vel mollis ligula cursus. Curabitur quis justo nec ex tincidunt mattis eget id lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut quis orci lacinia, aliquam lacus eu, elementum metus. Nulla et pharetra neque. Quisque quis vulputate sapien. Praesent vel lacus vel lectus rutrum mattis. Donec venenatis orci eget ipsum cursus, vel dapibus velit efficitur. Cras dapibus tortor velit, in porttitor lacus tristique ut.
+    <nav>
+        <div id="logo"><a href="#home"><img src="logo.svg"/></a></div>
+        <ul id="nav-elements">
+            <li><a id="home-button" href="#home">Home</a></li>
+            <li><a href="#work" class="button">Work</a></li>
+            <li><a href="#about" class="button">About</a></li>
+            <li><a href="#connect" class="button">Connect</a></li>
+        </ul>
+    </nav>
+    <div id="home-div"> 
+        <div id="greeting">
+            <p>Hi<span id="blink">|</span></p>
+        </div>
+        <div id="intro">
+            <p>I am <strong>Lin Wei</strong>, </p>
+            <p>A <strong>programmer</strong>, <strong>music</strong> enthusiast, <strong>math</strong>  geek, 
+                <strong>physics</strong> lover, </p>
+            <p>And an <strong><span class="underline">aspiring creative coder</span></strong>.</p>
+        </div>
     </div>
-    <div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse venenatis turpis at lorem accumsan, vel mollis ligula cursus. Curabitur quis justo nec ex tincidunt mattis eget id lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut quis orci lacinia, aliquam lacus eu, elementum metus. Nulla et pharetra neque. Quisque quis vulputate sapien. Praesent vel lacus vel lectus rutrum mattis. Donec venenatis orci eget ipsum cursus, vel dapibus velit efficitur. Cras dapibus tortor velit, in porttitor lacus tristique ut.
+    <div id="work-div" class="content">
+        <div class="header">
+            <h1>Work</h1>
+        </div>
+        <div id="projects">
+            <div class="project">
+                <p class="project-name">Tumblr Theme</p>
+                <div class="description">
+                    <p>HTML, CSS, Tumblr</p>
+                    <p>Done: Winter'16</p>
+                </div>
+            </div>
+            <div class="project">
+                <p class="project-name">Zeitraum</p>
+                <div class="description" id="zeitraum-description">
+                    <p>Javascript, SQL, Python</p>
+                    <p>Done: Summer'18</p>
+                </div>
+            </div>
+            <div class="project">
+                <p class="project-name">ACom- Pianist</p>
+                <div class="description">
+                    <p>Tensorflow, Javascript, Python</p>
+                    <p>Done: Summer'19</p>
+                </div>
+            </div>
+        </div>
     </div>
+    <div id="about-div" class="content">
+        <div class="header">
+            <h1>About</h1>
+        </div>
     </div>
+    <div id="connect-div" class="content">
+        <div class="header">
+            <h1>Connect</h1>
+        </div>
+    </div>
+    <!--copyright 2019 Poh Lin Wei. All rights reserved.-->
+    <script src="main.js"></script>
 </body>
 </html>
