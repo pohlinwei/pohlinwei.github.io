@@ -9,7 +9,7 @@ const mainURL = 'https://pohlinwei.github.io/';
 const alternate = () => blink.style.color = blink.style.color == 'rgb(255, 255, 255)' 
                         ? 'rgb(0, 0, 0)'
                         : 'rgb(255, 255, 255)';
-const toHomeDiv = () => homeDiv.scrollIntoView({behavior: 'smooth', block: 'end'});
+const toHomeDiv = () => homeDiv.scrollIntoView(false);
 
 // For work page
 let currentlyShowingIndex = null;
@@ -34,7 +34,7 @@ const hideDescription = () => {
         toggle[i].classList.remove('hidden');
     }
     body.style.backgroundColor = '#000';
-    workDiv.scrollIntoView({behavior: 'auto', block: 'end'});
+    workDiv.scrollIntoView(false);
     currentlyShowingIndex = null;
 }
 const showcase = () => {
@@ -69,8 +69,7 @@ window.onload = Promise.all(files.map(file => loadFile(file)))
                         tumblrTheme = response[0];
                         zeitraum = response[1];
                         acompianist = response[2];
-                        console.log('hi');
-                    })
+                    });
 
 /*====================
     EVENT HANDLERS
@@ -83,7 +82,7 @@ const allButtons = document.getElementsByClassName('button');
 const allContentDiv = document.getElementsByClassName('content');
 for (let i = 0; i < allButtons.length; i++) {
     const button = allButtons[i];
-    button.onclick = () => allContentDiv[i].scrollIntoView({behavior: 'smooth', block: 'end'});
+    button.onclick = () => allContentDiv[i].scrollIntoView(false);
 }
 const homeButton = document.getElementById('home-button');
 const logo = document.getElementById('logo');
@@ -121,6 +120,22 @@ module.exports = class Project {
         this.length = length;
         this.slides = slides;
         this.slidesMobile = slidesMobile;
+        this.current = null;
+    }
+
+    get next() {
+        this.current = this.current == null ? 0 : (this.current + 1);
+        let innerhtml = isLandscape ? slides[this.current] 
+                                    : this.slidesMobile[this.current];
+        return innerhtml;
+    }
+
+    get prev() {
+
+    }
+
+    isLandscape() {
+        return window.innerHeight < window.innerWidth;
     }
 }
 },{}]},{},[1]);
