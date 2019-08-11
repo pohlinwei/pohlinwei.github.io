@@ -68,7 +68,7 @@ window.onload = Promise.all(files.map(file => loadFile(file)))
                     .then(response => {
                         tumblrTheme = response[0];
                         zeitraum = response[1];
-                        acompianist = reponse[2];
+                        acompianist = response[2];
                         console.log('hi');
                     })
 
