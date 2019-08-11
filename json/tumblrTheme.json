@@ -1,6 +1,6 @@
 {
     "name": "tumblrTheme",
     "length": 4,
-    "slides": [],
+    "slides": ["<h1>Hi</hi>"],
     "slidesMobile": []
 }
