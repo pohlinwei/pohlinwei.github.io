@@ -2,13 +2,14 @@
 <html>
 <head>
     <title> Lin Wei </title>
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Caslon+Display|Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 </head>
 <body>
-    <nav>
-        <div id="logo"><a href="#home"><img src="logo.svg"/></a></div>
+    <!--Navbar-->
+    <nav class="toggle">
+        <div id="logo"><a href="#home"><img src="images/logo.svg"/></a></div>
         <ul id="nav-elements">
             <li><a id="home-button" href="#home">Home</a></li>
             <li><a href="#work" class="button">Work</a></li>
@@ -16,7 +17,8 @@
             <li><a href="#connect" class="button">Connect</a></li>
         </ul>
     </nav>
-    <div id="home-div"> 
+    <!--Greetings/Welcome-->
+    <div id="home-div" class="toggle"> 
         <div id="greeting">
             <p>Hi<span id="blink">|</span></p>
         </div>
@@ -27,45 +29,97 @@
             <p>And an <strong><span class="underline">aspiring creative coder</span></strong>.</p>
         </div>
     </div>
-    <div id="work-div" class="content">
+    <!--Work/Porject showcase-->
+    <div id="work-div" class="content toggle">
         <div class="header">
-            <h1>Work</h1>
+            <h1>Featured Work</h1>
         </div>
         <div id="projects">
             <div class="project">
                 <p class="project-name">Tumblr Theme</p>
-                <div class="description">
+                <div class="summary">
                     <p>HTML, CSS, Tumblr</p>
                     <p>Done: Winter'16</p>
                 </div>
             </div>
             <div class="project">
                 <p class="project-name">Zeitraum</p>
-                <div class="description" id="zeitraum-description">
-                    <p>Javascript, SQL, Python</p>
+                <div class="summary" id="zeitraum-summary">
+                    <p>HTML/CSS, Javascript, SQL, Python</p>
                     <p>Done: Summer'18</p>
                 </div>
             </div>
             <div class="project">
                 <p class="project-name">ACom- Pianist</p>
-                <div class="description">
-                    <p>Tensorflow, Javascript, Python</p>
+                <div class="summary">
+                    <p>HTML/CSS, Typescript, Python</p>
                     <p>Done: Summer'19</p>
                 </div>
             </div>
         </div>
     </div>
-    <div id="about-div" class="content">
+    <!--Description of Projects-->
+    <div class="description hidden">
+        <div class="close" ><img src="images/close.svg"/></div>
+        <div class="intro">
+            <div>
+                <div class="title"><p>Tumblr Theme</p></div>
+                <div class="details">
+                    <p>A <strong>responsive</strong> Tumblr theme that is 'good for <strong>text</strong>'. 
+                    This was created in <strong>response</strong> to the <strong>narrower range</strong> 
+                    of Tumblr themes that was available to <strong>writers</strong> and <strong>poets</strong> on Tumblr.
+                    </p>
+                </div>
+            </div>
+            <div class="intro-next"><p>>></p></div>
+        </div>
+        <div class="showcase"></div>
+    </div>
+    <div class="description hidden">
+        <div class="close" ><img src="images/close.svg"/></div>
+        <div class="intro">
+            <div>
+                <div class="title"><p>Zeitraum</p></div>
+                <div class="details">
+                    <p>A <strong>responsive</strong> Tumblr theme that is 'good for <strong>text</strong>'. 
+                    This was created in <strong>response</strong> to the <strong>narrower range</strong> 
+                    of Tumblr themes that was available to <strong>writers</strong> and <strong>poets</strong> on Tumblr.
+                    </p>
+                </div>
+            </div>
+            <div class="intro-next"><p>>></p></div>
+        </div>
+        <div class="showcase"></div>
+    </div>
+    <div class="description hidden">
+        <div class="close" ><img src="images/close.svg"/></div>
+        <div class="intro">
+            <div>
+                <div class="title"><p>AComPianist</p></div>
+                <div class="details">
+                    <p>A <strong>responsive</strong> Tumblr theme that is 'good for <strong>text</strong>'. 
+                    This was created in <strong>response</strong> to the <strong>narrower range</strong> 
+                    of Tumblr themes that was available to <strong>writers</strong> and <strong>poets</strong> on Tumblr.
+                    </p>
+                </div>
+            </div>
+            <div class="intro-next"><p>>></p></div>
+        </div>
+        <div class="showcase"></div>
+    </div>
+    <!--About-->
+    <div id="about-div" class="content toggle">
         <div class="header">
             <h1>About</h1>
         </div>
     </div>
-    <div id="connect-div" class="content">
+    <!--Connect-->
+    <div id="connect-div" class="content toggle">
         <div class="header">
             <h1>Connect</h1>
         </div>
     </div>
     <!--copyright 2019 Poh Lin Wei. All rights reserved.-->
-    <script src="main.js"></script>
+    <script src="bundle.js"></script>
 </body>
 </html>
