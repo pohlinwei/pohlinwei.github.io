@@ -8,10 +8,7 @@ body {
 body > div, nav {
     margin-left: -8px;
     width: 98vw;
-}
-
-.hidden {
-    display: none;
+    display: flex;
 }
 
 .header {
@@ -26,7 +23,6 @@ body > div, nav {
 .content {
     width: 90vw;
     height: 78vh;
-    display: flex;
     background-color: #fff;
     padding: 5vh 5vw;
     flex-direction: column;
@@ -87,7 +83,6 @@ nav {
 /* Styling for home page */
 #home-div {
     height: 87vh;
-    display: flex;
     flex-direction: column;
     color: #fff;
     padding: 9vh 1vw 3vh 1vw;
@@ -107,7 +102,7 @@ nav {
 #intro {
     padding: 10px;
     text-align: center;
-    font-size: 1.1em;
+    font-size: 1.5em;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
@@ -158,29 +153,95 @@ nav {
     font-size: 5vw;
 }
 
-.description {
+.summary {
     display: flex;
     flex-direction: row;
 }
 
-.description > p {
+.summary > p {
     font-size: 1em;
 }
 
-.description > p:nth-of-type(1) {
+.summary > p:nth-of-type(1) {
     flex-grow: 4;
     text-align: left;
 }
 
-.description > p:nth-of-type(2) {
+.summary > p:nth-of-type(2) {
     flex-grow: 1;
     text-align: right;
 }
 
-#zeitraum-description {
+#zeitraum-summary {
     margin-top: 3.5vw;
 }
+
+/* For project description */
+.description {
+    width: 98vw;
+    height: 96vh;
+    
+    margin: auto;
+    background-color: #F0FEFE;
+    flex-direction: column;
+}
+
+.close {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px;
+}
+
+.close:hover {
+    cursor: pointer;
+}
+
+.title {
+    text-align: center;
+    /*border: 1px solid salmon;*/
+    margin-top: 3vh;
+}
+
+.title > p {
+    font-family: 'Playfair Display', serif; 
+    font-size: 4em;
+    text-decoration: underline;
+}
+
+.intro {
+    display: flex;
+    flex-direction: row;
+    width: 65vw;
+    margin: auto;
+    border: 2px solid  #e0dbc7;
+    padding: 15px;
+}
+
+.details {
+    font-family: 'Libre Caslon Display', serif;
+    font-size: 1.8em;
+    padding: 0px 2vw;
+    line-height: 50px;
+    align-self: center;
+}
+
+.intro-next {
+    text-align: center;
+    font-size: 2em;
+    align-self: center;
+    padding-top: 2em;
+}
+
+.intro-next:hover {
+    cursor: pointer;
+}
+
 /* Styling for about page */
 #about-content {
     border: 1px solid red;
+}
+
+/* Others */
+.hidden {
+    display: none;
 }
