@@ -62,10 +62,25 @@ const updateImage = () => {
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 // number of images for each of the above
 const numImages = [4, 8, 4];
+/*
 const projects = [];
 for (let i in files) {
     projects.push(new Project(i, files[i], numImages[i]));
+}*/
+const loadProjects = [];
+for (let i in files) {
+    loadProjects.push(new Promise((resolve, reject) => {
+        resolve(new Project(i, files[i], numImages[i]));
+    }));
+    console.log(loadProjects[i]);
 }
+const projects = [];
+Promise.all(loadProjects)
+    .then(response => {
+        projects.push(...response);
+        projects.map(x => console.log(x));
+    })
+    .catch(err => console.error('Unable to create projects: ' + err));
 
 /*====================
     EVENT HANDLERS
@@ -116,13 +131,14 @@ module.exports = class Project {
         this.index = index;
         this.name = name;
         this.length = length;
-        this.current = null;
+        this.current = -1;
         this.landscape = this.isLandscape();
         /* For HTML element creation */
         this.nextButton = '<div class="next hidden"><p>>></p></div>';
         this.backButton = '<div class="back hidden"><p><<</p></div>';
         this.pre = '<div class="hidden"><img src="images/';
         this.post = '.png"/></div>';
+        this.github = '<div class="view-code hidden"><p>View Code <img src="vectors/github.svg"/></p></div>';
         /* To create elements and load images */
         this.generateElements();
     }
@@ -135,7 +151,7 @@ module.exports = class Project {
             innerhtml += (this.pre + this.name + '/' + 'mobile_' + i +
                             this.post);
         }
-        innerhtml += this.nextButton;
+        innerhtml += (this.nextButton + this.github);
         const targetParent = document.getElementsByClassName('showcase')[this.index];
         targetParent.innerHTML = innerhtml;
         // add event listeners on buttons
@@ -146,7 +162,7 @@ module.exports = class Project {
     }
 
     next() {
-        if (this.current == null) {
+        if (this.current == -1) {
             this.current = 0;
             const nextButton = document.getElementsByClassName('next')[this.index];
             const backButton = document.getElementsByClassName('back')[this.index];
@@ -158,6 +174,14 @@ module.exports = class Project {
             prevElement.classList.add('hidden');
             this.current++;
         }
+
+        if (this.current == this.length) {
+            const nextButton = document.getElementsByClassName('next')[this.index];
+            nextButton.classList.add('hidden');
+            const selector = document.getElementsByClassName('view-code')[this.index];
+            selector.classList.remove('hidden');
+            return;
+        }
         this.landscape = this.isLandscape();
         const selector = this.selector();
         const element = document.querySelector(selector).parentElement;
@@ -165,16 +189,35 @@ module.exports = class Project {
     }
 
     prev() {
-
+        const prevElement = this.current == this.length
+                            ? document.getElementsByClassName('view-code')[this.index]
+                            : document.querySelector(this.selector()).parentElement;
+        prevElement.classList.add('hidden');
+        if (this.current == 0) {
+            const parent = document.getElementsByClassName('description')[this.index];
+            const element = parent.children[1];
+            element.classList.remove('hidden');
+            const backButton = document.getElementsByClassName('back')[this.index];
+            const nextButton = document.getElementsByClassName('next')[this.index];
+            backButton.classList.add('hidden');
+            nextButton.classList.add('hidden');
+            this.current--;
+        } else {
+            if (this.current == this.length) {
+                const nextButton = document.getElementsByClassName('next')[this.index];
+                nextButton.classList.remove('hidden');
+            }
+            this.current--;
+            const selector = this.selector();
+            const element = document.querySelector(selector).parentElement;
+            element.classList.remove('hidden');
+        }
     }
 
     update() {
-        console.log('sub resize');
-        if (this.isLandscape() == this.landscape) {
-            console.log('no change');
+        if (this.isLandscape() == this.landscape || this.current == this.length) {
             return;
         } else {
-            console.log('change');
             const prevSelector = this.selector();
             const prevElement = document.querySelector(prevSelector).parentElement;
             prevElement.classList.add('hidden');
@@ -186,17 +229,22 @@ module.exports = class Project {
     }
 
     clear() {
-        if (this.current == null) {
+        if (this.current == -1) {
             return;
-        }
-        const selector = this.selector();
-        const element = document.querySelector(selector).parentElement;
-        element.classList.add('hidden');
-        const nextButton = document.getElementsByClassName('next')[this.index];
+        } 
         const prevButton = document.getElementsByClassName('back')[this.index];
-        nextButton.classList.add('hidden');
         prevButton.classList.add('hidden');
-        this.current = null;
+        if (this.current == this.length) {
+            const selector = document.getElementsByClassName('view-code')[this.index];
+            selector.classList.add('hidden');
+        } else {
+            const selector = this.selector();
+            const element = document.querySelector(selector).parentElement;
+            element.classList.add('hidden');
+            const nextButton = document.getElementsByClassName('next')[this.index];
+            nextButton.classList.add('hidden');
+        }
+        this.current = -1;
     }
 
     selector() {
@@ -205,41 +253,12 @@ module.exports = class Project {
             this.current + '.png"]';
     }
 
-    /*
-    get next() {
-        this.current = this.current == null ? 0 : (this.current + 1);
-        let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
-        innerhtml += (this.current + '.png');
-        innerhtml = this.pre + innerhtml + this.post;
-        if (this.current == length - 1) {
-            innerhtml += this.nextButton;
-        } else {
-            innerhtml = this.backButton + innerhtml + this.nextButton;
-        }
-        console.log(innerhtml);
-        this.innerhtml = innerhtml;
-        return innerhtml;
-    }
-
-    get prev() {
-        
-    }
-
-    get update() {
-        if (this.current == null || this.current == length - 1) {
-            return this.innerhtml;
-        } else {
-            let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
-            innerhtml += (this.current + '.png');
-            innerhtml = this.pre + innerhtml + this.post;
-            innerhtml = this.backButton + innerhtml + this.nextButton;
-            this.innerhtml = innerhtml;
-            return innerhtml;
-        }
-    }*/
-
     isLandscape() {
         return window.innerHeight < window.innerWidth;
     }
 }
+
+/* To-do 
+3. Style and add in event handler for github button 
+*/
 },{}]},{},[1]);
