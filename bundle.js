@@ -85,6 +85,7 @@ Promise.all(loadProjects)
         projects.map(x => console.log(x));
     })
     .catch(err => console.error('Unable to create projects: ' + err)); */
+const projects = [];
 for (let i in files) {
     projects.push(new Project(i, files[i], numImages[i]));
 }
