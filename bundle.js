@@ -62,25 +62,10 @@ const updateImage = () => {
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 // number of images for each of the above
 const numImages = [4, 8, 4];
-/*
 const projects = [];
 for (let i in files) {
     projects.push(new Project(i, files[i], numImages[i]));
-}*/
-const loadProjects = [];
-for (let i in files) {
-    loadProjects.push(new Promise((resolve, reject) => {
-        resolve(new Project(i, files[i], numImages[i]));
-    }));
-    console.log(loadProjects[i]);
 }
-const projects = [];
-Promise.all(loadProjects)
-    .then(response => {
-        projects.push(...response);
-        projects.map(x => console.log(x));
-    })
-    .catch(err => console.error('Unable to create projects: ' + err));
 
 /*====================
     EVENT HANDLERS
@@ -138,7 +123,7 @@ module.exports = class Project {
         this.backButton = '<div class="back hidden"><p><<</p></div>';
         this.pre = '<div class="hidden"><img src="images/';
         this.post = '.png"/></div>';
-        this.github = '<div class="view-code hidden"><p>View Code <img src="vectors/github.svg"/></p></div>';
+        this.github = '<div class="view-code hidden"><a href="">View Code <img src="vectors/github.svg"/></a></div>';
         /* To create elements and load images */
         this.generateElements();
     }
