@@ -125,7 +125,7 @@ module.exports = class Project {
         this.backButton = '<div class="back hidden"><p><<</p></div>';
         this.pre = '<div class="hidden"><img src="images/';
         this.post = '.png"/></div>';
-        this.github = '<div class="view-code hidden"><a href="">View Code <i class="fab fa-github"></i></a></div>';
+        this.github = '<div class="view-code hidden"><a href="">View Code <img src="vectors/github.svg"/></a></div>';
         /* To create elements and load images */
         this.generateElements();
     }
@@ -244,8 +244,4 @@ module.exports = class Project {
         return window.innerHeight < window.innerWidth;
     }
 }
-
-/* To-do 
-3. Style and add in event handler for github button 
-*/
 },{}]},{},[1]);
