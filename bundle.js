@@ -29,9 +29,11 @@ const showDescription = i => {
     }
     body.style.backgroundColor = '#F0FEFE';
 }
-const hideDescription = () => {
-    // hide images and reset
-    currentProject.clear();
+const hideDescription = () => { 
+    if (currentProject != null) {
+        // hide images and reset
+        currentProject.clear();
+    }
     // hide 'pop up' window
     currentDescription.classList.add('hidden');
     for (let i = 0; i < toggle.length; i++) {
@@ -62,25 +64,10 @@ const updateImage = () => {
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 // number of images for each of the above
 const numImages = [4, 8, 3];
-
 const projects = [];
 for (let i in files) {
     projects.push(new Project(i, files[i], numImages[i]));
-}/*
-const loadProjects = [];
-for (let i in files) {
-    loadProjects.push(new Promise((resolve, reject) => {
-        resolve(new Project(i, files[i], numImages[i]));
-    }));
-    console.log(loadProjects[i]);
 }
-const projects = [];
-Promise.all(loadProjects)
-    .then(response => {
-        projects.push(...response);
-        projects.map(x => console.log(x));
-    })
-    .catch(err => console.error('Unable to create projects: ' + err));*/
 
 /*====================
     EVENT HANDLERS
@@ -138,7 +125,7 @@ module.exports = class Project {
         this.backButton = '<div class="back hidden"><p><<</p></div>';
         this.pre = '<div class="hidden"><img src="images/';
         this.post = '.png"/></div>';
-        this.github = '<div class="view-code hidden"><a href="">View Code <img src="vectors/github.svg"/></a></div>';
+        this.github = '<div class="view-code hidden"><a href="">View Code <i class="fab fa-github"></i></a></div>';
         /* To create elements and load images */
         this.generateElements();
     }
