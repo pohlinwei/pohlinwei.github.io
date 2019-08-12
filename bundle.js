@@ -45,14 +45,31 @@ const showcase = () => {
 // Obtain required data for showcase
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 let tumblrTheme, zeitraum, acompianist;
-const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
-// number of images for each of the above
-const numImages = [4, 4, 4];
-const projects = [];
-for (let i in files) {
-    projects.push(new Project(files[i], numImages[i]));
-    console.log(projects[i]);
+function loadFile(requestURL) {
+    return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.open('GET', mainURL + '/json/' + requestURL + '.json');
+        request.responseType = 'json';
+        request.send();
+        request.onload = () => {
+            const response = request.response;
+            const name = response.name;
+            const length = response.length;
+            const slides = response.slides;
+            const slidesMobile = response.slidesMobile;
+            resolve(new Project(name, length, slides, slidesMobile));
+        }
+        request.onerror = () => {
+            reject('Unable to fetch .json file for ' + requestURL);
+        }
+    })
 }
+window.onload = Promise.all(files.map(file => loadFile(file)))
+                    .then(response => {
+                        tumblrTheme = response[0];
+                        zeitraum = response[1];
+                        acompianist = response[2];
+                    });
 
 /*====================
     EVENT HANDLERS
@@ -98,54 +115,27 @@ for (let introNextButton of introNextButtons) {
 }
 },{"./project.js":2}],2:[function(require,module,exports){
 module.exports = class Project {
-    constructor(name, length) {
+    constructor(name, length, slides, slidesMobile) {
         this.name = name;
         this.length = length;
+        this.slides = slides;
+        this.slidesMobile = slidesMobile;
         this.current = null;
-        this.innerhtml = '';
     }
 
     get next() {
         this.current = this.current == null ? 0 : (this.current + 1);
-        let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
-        innerhtml += (this.current + '.png');
-        innerhtml = this.pre + innerhtml + this.post;
-        if (this.current == length - 1) {
-            innerhtml += this.nextButton;
-        } else {
-            innerhtml = this.backButton + innerhtml + this.nextButton;
-        }
-        console.log(innerhtml);
-        this.innerhtml = innerhtml;
+        let innerhtml = isLandscape ? slides[this.current] 
+                                    : this.slidesMobile[this.current];
         return innerhtml;
     }
 
     get prev() {
-        
-    }
 
-    get update() {
-        if (this.current == null || this.current == length - 1) {
-            return this.innerhtml;
-        } else {
-            let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
-            innerhtml += (this.current + '.png');
-            innerhtml = this.pre + innerhtml + this.post;
-            innerhtml = this.backButton + innerhtml + this.nextButton;
-            this.innerhtml = innerhtml;
-            return innerhtml;
-        }
     }
 
     isLandscape() {
-        console.log(window.innerHeight);
-        console.log(window.innerWidth);
         return window.innerHeight < window.innerWidth;
     }
-    /* remove the following, put this in html code */
-    nextButton = '<div class="next"><p>>></p></div>';
-    backButton = '<div class="back"><p><<</p></div>';
-    pre = '<div><img src="images/';
-    post = '"/></div>';
 }
 },{}]},{},[1]);
