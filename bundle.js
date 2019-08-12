@@ -102,40 +102,6 @@ module.exports = class Project {
         this.innerhtml = '';
     }
 
-    get next() {
-        this.current = this.current == null ? 0 : (this.current + 1);
-        let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
-        innerhtml += (this.current + '.png');
-        innerhtml = this.pre + innerhtml + this.post;
-        if (this.current == length - 1) {
-            innerhtml += this.nextButton;
-        } else {
-            innerhtml = this.backButton + innerhtml + this.nextButton;
-        }
-        this.innerhtml = innerhtml;
-        return innerhtml;
-    }
-
-    get prev() {
-        
-    }
-
-    get update() {
-        if (this.current == null || this.current == length - 1) {
-            return this.innerhtml;
-        } else {
-            let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
-            innerhtml += (this.current + '.png');
-            innerhtml = this.pre + innerhtml + this.post;
-            innerhtml = this.backButton + innerhtml + this.nextButton;
-            this.innerhtml = innerhtml;
-            return innerhtml;
-        }
-    }
-
-    isLandscape() {
-        return window.innerHeight < window.innerWidth;
-    }
     /* remove the following, put this in html code */
     nextButton = '<div class="next"><p>>></p></div>';
     backButton = '<div class="back"><p><<</p></div>';
