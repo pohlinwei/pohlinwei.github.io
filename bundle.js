@@ -7,7 +7,7 @@ const mainURL = 'https://pohlinwei.github.io/';
 ================*/
 // General
 const updateSize = () => {
-    document.body.height = window.innerHeight;
+    // document.body.height = window.innerHeight;
 }
 
 // For home page
