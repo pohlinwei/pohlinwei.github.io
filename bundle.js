@@ -14,7 +14,6 @@ const toHomeDiv = () => homeDiv.scrollIntoView(false);
 // For work page and descriptions
 let currentlyShowingIndex = null;
 let currentDescription = null;
-// let currentShowcase = null;
 let currentProject = null; 
 const showDescription = i => {
     for (let j = 0; j < toggle.length; j++) {
@@ -31,6 +30,9 @@ const showDescription = i => {
     body.style.backgroundColor = '#F0FEFE';
 }
 const hideDescription = () => {
+    // hide images and reset
+    currentProject.clear();
+    // hide 'pop up' window
     currentDescription.classList.add('hidden');
     for (let i = 0; i < toggle.length; i++) {
         toggle[i].classList.remove('hidden');
@@ -46,30 +48,20 @@ const showcase = () => {
     currentIntro.classList.add('hidden');
     currentProject = projects[currentlyShowingIndex];
     currentProject.next();
-    /* copied over
-    currentShowcase = allShowcase[currentlyShowingIndex];
-    currentShowcase.classList.add('showcase-main'); 
-    currentProject = projects[currentlyShowingIndex];
-    currentShowcase.innerHTML = currentProject.next; */
 }
-/*
-let isLandscape = window.innerWidth > window.innerHeight;
 const updateImage = () => {
     if (currentProject == null) {
         return;
-    } 
-    const updatedIsLandscape = window.innerWidth > window.innerHeight;
-    if (updatedIsLandscape == isLandscape) {
-        return;
+    } else {
+        console.log('main resiz');
+        currentProject.update();
     }
-    isLandscape = updatedIsLandscape;
-    currentShowcase.innerHTML = currentProject.update;
-}*/
+}
 
 // Obtain required data for showcase
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 // number of images for each of the above
-const numImages = [4, 9, 4];
+const numImages = [4, 8, 4];
 const projects = [];
 for (let i in files) {
     projects.push(new Project(i, files[i], numImages[i]));
@@ -117,8 +109,7 @@ const introNextButtons = document.getElementsByClassName('intro-next');
 for (let introNextButton of introNextButtons) {
     introNextButton.onclick = showcase;
 }
-const allShowcase = document.getElementsByClassName('showcase');
-// window.onresize = () => updateImage;
+window.onresize = updateImage;
 },{"./project.js":2}],2:[function(require,module,exports){
 module.exports = class Project {
     constructor(index, name, length) {
@@ -126,6 +117,7 @@ module.exports = class Project {
         this.name = name;
         this.length = length;
         this.current = null;
+        this.landscape = this.isLandscape();
         /* For HTML element creation */
         this.nextButton = '<div class="next hidden"><p>>></p></div>';
         this.backButton = '<div class="back hidden"><p><<</p></div>';
@@ -137,15 +129,20 @@ module.exports = class Project {
 
     generateElements() {
         let innerhtml = '';
-        innerhtml += this.nextButton;
+        innerhtml += this.backButton;
         for (let i = 0; i < this.length; i++) {
             innerhtml += (this.pre + this.name + '/' + i + this.post);
             innerhtml += (this.pre + this.name + '/' + 'mobile_' + i +
                             this.post);
         }
-        innerhtml += this.backButton;
+        innerhtml += this.nextButton;
         const targetParent = document.getElementsByClassName('showcase')[this.index];
         targetParent.innerHTML = innerhtml;
+        // add event listeners on buttons
+        const nextButton = document.getElementsByClassName('next')[this.index];
+        const backButton = document.getElementsByClassName('back')[this.index];
+        nextButton.onclick = () => this.next();
+        backButton.onclick = () => this.prev();
     }
 
     next() {
@@ -156,13 +153,13 @@ module.exports = class Project {
             nextButton.classList.remove('hidden');
             backButton.classList.remove('hidden');
         } else {
+            const prevSelector = this.selector();
+            const prevElement = document.querySelector(prevSelector).parentElement;
+            prevElement.classList.add('hidden');
             this.current++;
         }
-        const selector = ('img[src="images/' + this.name + '/') + 
-                        (this.isLandscape() ? '' : 'mobile_') +
-                        this.current + '.png"]';
-        console.log(selector);
-        console.log(document.querySelector(selector));
+        this.landscape = this.isLandscape();
+        const selector = this.selector();
         const element = document.querySelector(selector).parentElement;
         element.classList.remove('hidden');
     }
@@ -172,7 +169,40 @@ module.exports = class Project {
     }
 
     update() {
+        console.log('sub resize');
+        if (this.isLandscape() == this.landscape) {
+            console.log('no change');
+            return;
+        } else {
+            console.log('change');
+            const prevSelector = this.selector();
+            const prevElement = document.querySelector(prevSelector).parentElement;
+            prevElement.classList.add('hidden');
+            this.landscape = this.isLandscape();
+            const selector = this.selector();
+            const element = document.querySelector(selector).parentElement;
+            element.classList.remove('hidden');
+        }
+    }
 
+    clear() {
+        if (this.current == null) {
+            return;
+        }
+        const selector = this.selector();
+        const element = document.querySelector(selector).parentElement;
+        element.classList.add('hidden');
+        const nextButton = document.getElementsByClassName('next')[this.index];
+        const prevButton = document.getElementsByClassName('back')[this.index];
+        nextButton.classList.add('hidden');
+        prevButton.classList.add('hidden');
+        this.current = null;
+    }
+
+    selector() {
+        return ('img[src="images/' + this.name + '/') + 
+            (this.landscape ? '' : 'mobile_') +
+            this.current + '.png"]';
     }
 
     /*
@@ -209,8 +239,6 @@ module.exports = class Project {
     }*/
 
     isLandscape() {
-        console.log(window.innerHeight);
-        console.log(window.innerWidth);
         return window.innerHeight < window.innerWidth;
     }
 }
