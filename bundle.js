@@ -81,6 +81,7 @@ const projects = [];
 Promise.all(loadProjects)
     .then(response => {
         projects.push(...response);
+        projects.map(x => console.log(x));
     })
     .catch(err => console.error('Unable to create projects: ' + err));
 
@@ -158,7 +159,22 @@ module.exports = class Project {
     }
 
     next() {
-
+        if (this.current == null) {
+            this.current = 0;
+            const nextButton = document.getElementsByClassName('next')[this.index];
+            const backButton = document.getElementsByClassName('back')[this.index];
+            nextButton.classList.remove('hidden');
+            backButton.classList.remove('hidden');
+        } else {
+            this.current++;
+        }
+        const selector = ('img[src="images/' + this.name + '/') + 
+                        (this.isLandscape() ? '' : 'mobile_') +
+                        this.current + '.png"]';
+        console.log(selector);
+        console.log(document.querySelector(selector));
+        const element = document.querySelector(selector).parentElement;
+        element.classList.remove('hidden');
     }
 
     prev() {
