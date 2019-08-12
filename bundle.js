@@ -69,22 +69,7 @@ const updateImage = () => {
 // Obtain required data for showcase
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 // number of images for each of the above
-const numImages = [4, 4, 4];
-const loadProjects = [];
-/*
-for (let i in files) {
-    loadProjects.push(new Promise((resolve, reject) => {
-        resolve(new Project(i, files[i], numImages[i]));
-    }));
-    console.log(loadProjects[i]);
-}
-const projects = [];
-Promise.all(loadProjects)
-    .then(response => {
-        projects.push(...response);
-        projects.map(x => console.log(x));
-    })
-    .catch(err => console.error('Unable to create projects: ' + err)); */
+const numImages = [4, 8, 4];
 const projects = [];
 for (let i in files) {
     projects.push(new Project(i, files[i], numImages[i]));
