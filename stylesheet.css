@@ -36,12 +36,12 @@ body > div, nav {
 
 /* Styling for nav bar */
 nav {
-    margin-top: -7px;
+    margin-top: -10px;
     position: fixed;
     display: flex;
     flex-direction: row;
     height: 10vh;
-    padding: 1.2vh 2vw;
+    padding: 2vh 2vw 1.2vh 2vw;
     background-color: #000;
 }
 
@@ -198,7 +198,6 @@ nav {
 
 .title {
     text-align: center;
-    /*border: 1px solid salmon;*/
     margin-top: 3vh;
 }
 
@@ -209,12 +208,23 @@ nav {
 }
 
 .intro {
+    border: 2px solid  #e0dbc7;
+    width: 65vw;
+    padding: 15px;
+    margin: auto;
+}
+
+.intro, .showcase-main {
     display: flex;
     flex-direction: row;
-    width: 65vw;
-    margin: auto;
-    border: 2px solid  #e0dbc7;
-    padding: 15px;
+}
+
+.showcase-main {
+    padding-top: 5vh;
+    margin-left: -8px;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
 }
 
 .details {
@@ -232,9 +242,38 @@ nav {
     padding-top: 2em;
 }
 
-.intro-next:hover {
+.intro-next:hover, .next:hover, .back:hover {
     cursor: pointer;
 }
+
+.next, .back {
+    text-align: center;
+    align-self: center;
+    font-size: 5vmin;
+}
+
+.back {
+    padding-right: 30px;
+}
+
+.next {
+    padding-left: 30px;
+}
+
+
+@media screen and (orientation: landscape) {
+    .showcase-main > div > img {
+        width: 110vh;
+        height: 80vh;
+    }
+} 
+
+@media screen and (orientation: portrait) {
+    .showcase-main > div > img {
+        width: 75vw;
+        height: 80vh;
+    }
+} 
 
 /* Styling for about page */
 #about-content {
