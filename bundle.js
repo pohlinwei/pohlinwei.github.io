@@ -5,71 +5,78 @@ const mainURL = 'https://pohlinwei.github.io/';
 /*================
     FUNCTIONS 
 ================*/
+// General
+const updateSize = () => {
+    document.body.height = window.innerHeight;
+}
+
 // For home page
 const alternate = () => blink.style.color = blink.style.color == 'rgb(255, 255, 255)' 
                         ? 'rgb(0, 0, 0)'
                         : 'rgb(255, 255, 255)';
 const toHomeDiv = () => homeDiv.scrollIntoView(false);
 
-// For work page
+// For work page and descriptions
 let currentlyShowingIndex = null;
+let currentDescription = null;
+let currentShowcase = null;
+let currentProject = null;
 const showDescription = i => {
     for (let j = 0; j < toggle.length; j++) {
         toggle[j].classList.add('hidden');
     }
     currentlyShowingIndex = i;
-    allDescriptions[i].classList.remove('hidden');
+    currentDescription = allDescriptions[i];
+    currentDescription.classList.remove('hidden');
     // show intro if it has been removed earlier
-    const currentIntro = allDescriptions[i].children[1];
+    const currentIntro = currentDescription.children[1];
     if (currentIntro.classList.contains('hidden')) {
         currentIntro.classList.remove('hidden');
     }
     body.style.backgroundColor = '#F0FEFE';
 }
-
-// For description
 const hideDescription = () => {
-    allDescriptions[currentlyShowingIndex].classList.add('hidden');
+    currentDescription.classList.add('hidden');
     for (let i = 0; i < toggle.length; i++) {
         toggle[i].classList.remove('hidden');
     }
     body.style.backgroundColor = '#000';
     workDiv.scrollIntoView(false);
     currentlyShowingIndex = null;
+    currentDescription = null;
+    currentShowcase = null;
+    currentProject = null;
 }
 const showcase = () => {
-    const currentIntro = allDescriptions[currentlyShowingIndex].children[1];
+    const currentIntro = currentDescription.children[1];
     currentIntro.classList.add('hidden');
+    currentShowcase = allShowcase[currentlyShowingIndex];
+    currentShowcase.classList.add('showcase-main');
+    currentProject = projects[currentlyShowingIndex];
+    currentShowcase.innerHTML = currentProject.next;
+}
+let isLandscape = window.innerWidth > window.innerHeight;
+const updateImage = () => {
+    if (currentProject == null) {
+        return;
+    } 
+    const updatedIsLandscape = window.innerWidth > window.innerHeight;
+    if (updatedIsLandscape == isLandscape) {
+        return;
+    }
+    isLandscape = updatedIsLandscape;
+    currentShowcase.innerHTML = currentProject.update;
 }
 
 // Obtain required data for showcase
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
-let tumblrTheme, zeitraum, acompianist;
-function loadFile(requestURL) {
-    return new Promise((resolve, reject) => {
-        const request = new XMLHttpRequest();
-        request.open('GET', mainURL + '/json/' + requestURL + '.json');
-        request.responseType = 'json';
-        request.send();
-        request.onload = () => {
-            const response = request.response;
-            const name = response.name;
-            const length = response.length;
-            const slides = response.slides;
-            const slidesMobile = response.slidesMobile;
-            resolve(new Project(name, length, slides, slidesMobile));
-        }
-        request.onerror = () => {
-            reject('Unable to fetch .json file for ' + requestURL);
-        }
-    })
+// number of images for each of the above
+const numImages = [4, 4, 4];
+const projects = [];
+for (let i in files) {
+    projects.push(new Project(files[i], numImages[i]));
+    console.log(projects[i]);
 }
-window.onload = Promise.all(files.map(file => loadFile(file)))
-                    .then(response => {
-                        tumblrTheme = response[0];
-                        zeitraum = response[1];
-                        acompianist = response[2];
-                    });
 
 /*====================
     EVENT HANDLERS
@@ -113,29 +120,61 @@ const introNextButtons = document.getElementsByClassName('intro-next');
 for (let introNextButton of introNextButtons) {
     introNextButton.onclick = showcase;
 }
+const allShowcase = document.getElementsByClassName('showcase');
+window.onresize = () => {
+    updateSize();
+    updateImage();
+}
 },{"./project.js":2}],2:[function(require,module,exports){
 module.exports = class Project {
-    constructor(name, length, slides, slidesMobile) {
+    constructor(name, length) {
         this.name = name;
         this.length = length;
-        this.slides = slides;
-        this.slidesMobile = slidesMobile;
         this.current = null;
+        this.innerhtml = '';
     }
 
     get next() {
         this.current = this.current == null ? 0 : (this.current + 1);
-        let innerhtml = isLandscape ? slides[this.current] 
-                                    : this.slidesMobile[this.current];
+        let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
+        innerhtml += (this.current + '.png');
+        innerhtml = this.pre + innerhtml + this.post;
+        if (this.current == length - 1) {
+            innerhtml += this.nextButton;
+        } else {
+            innerhtml = this.backButton + innerhtml + this.nextButton;
+        }
+        console.log(innerhtml);
+        this.innerhtml = innerhtml;
         return innerhtml;
     }
 
     get prev() {
+        
+    }
 
+    get update() {
+        if (this.current == null || this.current == length - 1) {
+            return this.innerhtml;
+        } else {
+            let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
+            innerhtml += (this.current + '.png');
+            innerhtml = this.pre + innerhtml + this.post;
+            innerhtml = this.backButton + innerhtml + this.nextButton;
+            this.innerhtml = innerhtml;
+            return innerhtml;
+        }
     }
 
     isLandscape() {
+        console.log(window.innerHeight);
+        console.log(window.innerWidth);
         return window.innerHeight < window.innerWidth;
     }
+    /* remove the following, put this in html code */
+    nextButton = '<div class="next"><p>>></p></div>';
+    backButton = '<div class="back"><p><<</p></div>';
+    pre = '<div><img src="images/';
+    post = '"/></div>';
 }
 },{}]},{},[1]);
