@@ -69,7 +69,7 @@ const updateImage = () => {
 // Obtain required data for showcase
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 // number of images for each of the above
-const numImages = [4, 8, 4];
+const numImages = [4, 9, 4];
 const projects = [];
 for (let i in files) {
     projects.push(new Project(i, files[i], numImages[i]));
