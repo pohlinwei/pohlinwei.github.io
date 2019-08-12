@@ -62,11 +62,11 @@ const updateImage = () => {
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 // number of images for each of the above
 const numImages = [4, 8, 3];
-/*
+
 const projects = [];
 for (let i in files) {
     projects.push(new Project(i, files[i], numImages[i]));
-}*/
+}/*
 const loadProjects = [];
 for (let i in files) {
     loadProjects.push(new Promise((resolve, reject) => {
@@ -80,7 +80,7 @@ Promise.all(loadProjects)
         projects.push(...response);
         projects.map(x => console.log(x));
     })
-    .catch(err => console.error('Unable to create projects: ' + err));
+    .catch(err => console.error('Unable to create projects: ' + err));*/
 
 /*====================
     EVENT HANDLERS
