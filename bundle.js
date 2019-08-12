@@ -5,11 +5,6 @@ const mainURL = 'https://pohlinwei.github.io/';
 /*================
     FUNCTIONS 
 ================*/
-// General
-const updateSize = () => {
-    document.body.height = window.innerHeight;
-}
-
 // For home page
 const alternate = () => blink.style.color = blink.style.color == 'rgb(255, 255, 255)' 
                         ? 'rgb(0, 0, 0)'
@@ -19,8 +14,8 @@ const toHomeDiv = () => homeDiv.scrollIntoView(false);
 // For work page and descriptions
 let currentlyShowingIndex = null;
 let currentDescription = null;
-let currentShowcase = null;
-let currentProject = null;
+// let currentShowcase = null;
+let currentProject = null; 
 const showDescription = i => {
     for (let j = 0; j < toggle.length; j++) {
         toggle[j].classList.add('hidden');
@@ -44,17 +39,20 @@ const hideDescription = () => {
     workDiv.scrollIntoView(false);
     currentlyShowingIndex = null;
     currentDescription = null;
-    currentShowcase = null;
     currentProject = null;
 }
 const showcase = () => {
     const currentIntro = currentDescription.children[1];
     currentIntro.classList.add('hidden');
-    currentShowcase = allShowcase[currentlyShowingIndex];
-    currentShowcase.classList.add('showcase-main');
     currentProject = projects[currentlyShowingIndex];
-    currentShowcase.innerHTML = currentProject.next;
+    currentProject.next();
+    /* copied over
+    currentShowcase = allShowcase[currentlyShowingIndex];
+    currentShowcase.classList.add('showcase-main'); 
+    currentProject = projects[currentlyShowingIndex];
+    currentShowcase.innerHTML = currentProject.next; */
 }
+/*
 let isLandscape = window.innerWidth > window.innerHeight;
 const updateImage = () => {
     if (currentProject == null) {
@@ -66,17 +64,25 @@ const updateImage = () => {
     }
     isLandscape = updatedIsLandscape;
     currentShowcase.innerHTML = currentProject.update;
-}
+}*/
 
 // Obtain required data for showcase
 const files = ['tumblrTheme', 'zeitraum', 'acompianist'];
 // number of images for each of the above
 const numImages = [4, 4, 4];
-const projects = [];
+const loadProjects = [];
 for (let i in files) {
-    projects.push(new Project(files[i], numImages[i]));
-    console.log(projects[i]);
+    loadProjects.push(new Promise((resolve, reject) => {
+        resolve(new Project(i, files[i], numImages[i]));
+    }));
+    console.log(loadProjects[i]);
 }
+const projects = [];
+Promise.all(loadProjects)
+    .then(response => {
+        projects.push(...response);
+    })
+    .catch(err => console.error('Unable to create projects: ' + err));
 
 /*====================
     EVENT HANDLERS
@@ -121,24 +127,49 @@ for (let introNextButton of introNextButtons) {
     introNextButton.onclick = showcase;
 }
 const allShowcase = document.getElementsByClassName('showcase');
-window.onresize = () => {
-    updateSize();
-    updateImage();
-}
+// window.onresize = () => updateImage;
 },{"./project.js":2}],2:[function(require,module,exports){
 module.exports = class Project {
-    constructor(name, length) {
+    constructor(index, name, length) {
+        this.index = index;
         this.name = name;
         this.length = length;
         this.current = null;
-        this.innerhtml = '';
-        /* remove and place in html? */
-        this.nextButton = '<div class="next"><p>>></p></div>';
-        this.backButton = '<div class="back"><p><<</p></div>';
-        this.pre = '<div><img src="images/';
-        this.post = '"/></div>';
+        /* For HTML element creation */
+        this.nextButton = '<div class="next hidden"><p>>></p></div>';
+        this.backButton = '<div class="back hidden"><p><<</p></div>';
+        this.pre = '<div class="hidden"><img src="images/';
+        this.post = '.png"/></div>';
+        /* To create elements and load images */
+        this.generateElements();
     }
 
+    generateElements() {
+        let innerhtml = '';
+        innerhtml += this.nextButton;
+        for (let i = 0; i < this.length; i++) {
+            innerhtml += (this.pre + this.name + '/' + i + this.post);
+            innerhtml += (this.pre + this.name + '/' + 'mobile_' + i +
+                            this.post);
+        }
+        innerhtml += this.backButton;
+        const targetParent = document.getElementsByClassName('showcase')[this.index];
+        targetParent.innerHTML = innerhtml;
+    }
+
+    next() {
+
+    }
+
+    prev() {
+
+    }
+
+    update() {
+
+    }
+
+    /*
     get next() {
         this.current = this.current == null ? 0 : (this.current + 1);
         let innerhtml = this.name + '/' + (this.isLandscape() ? '' : 'mobile_');
@@ -169,7 +200,7 @@ module.exports = class Project {
             this.innerhtml = innerhtml;
             return innerhtml;
         }
-    }
+    }*/
 
     isLandscape() {
         console.log(window.innerHeight);
