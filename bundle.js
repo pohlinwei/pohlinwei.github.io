@@ -4,11 +4,14 @@ const Project= require('./project.js');
 /*================
     FUNCTIONS 
 ================*/
+// General 
+const isLandscape = () => window.innerWidth > window.innerHeight;
+const scrollTo = element => isLandscape() ? element.scrollIntoView(false) : element.scrollIntoView(true);
 // For home page
 const alternate = () => blink.style.color = blink.style.color == 'rgb(255, 255, 255)' 
                         ? 'rgb(0, 0, 0)'
                         : 'rgb(255, 255, 255)';
-const toHomeDiv = () => homeDiv.scrollIntoView(false);
+const toHomeDiv = () => scrollTo(homeDiv);
 
 // For work page and descriptions
 let currentDescription = -1;
@@ -19,6 +22,7 @@ const showDescription = i => {
     currentDescription = allDescriptions[i];
     currentDescription.classList.remove('hidden');
     body.style.backgroundColor = '#EDEDED';
+    scrollTo(currentDescription);
 }
 const hideDescription = () => { 
     // hide 'pop up' window
@@ -27,7 +31,7 @@ const hideDescription = () => {
         toggle[i].classList.remove('hidden');
     }
     body.style.backgroundColor = '#000';
-    workDiv.scrollIntoView(false);
+    scrollTo(workDiv);
     currentDescription = -1;
 }
 
@@ -48,7 +52,7 @@ const allButtons = document.getElementsByClassName('button');
 const allContentDiv = document.getElementsByClassName('content');
 for (let i = 0; i < allButtons.length; i++) {
     const button = allButtons[i];
-    button.onclick = () => allContentDiv[i].scrollIntoView(false);
+    button.onclick = () => scrollTo(allContentDiv[i]);
 }
 const homeButton = document.getElementById('home-button');
 const logo = document.getElementById('logo');
@@ -105,7 +109,6 @@ module.exports = class Project {
                 this.generateElements();
             })
             .catch(err => console.error('Parsing of .json was unsuccessful: ' + err));
-        /* To create elements and load images */
     }
 
     generateElements() {
@@ -117,7 +120,6 @@ module.exports = class Project {
             innerhtml += ('<p>' + this.text[i] + '</p>');
         }
         innerhtml += (this.github + '</div></div>');
-        console.log(innerhtml);
         const parentElement = document.getElementsByClassName('intro')[this.index];
         parentElement.innerHTML = innerhtml;
     }
