@@ -530,8 +530,39 @@ screen and (max-height: 516px) {
         min-height: 90vh;
     }
 }
+/* Connect */
+#connect-div > div:nth-of-type(2){
+    display: flex;
+    align-self: center;
+    width: 80%;
+    text-align: center;
+}
+
+#connect-div > div:nth-of-type(2) > div {
+    flex-grow: 1;
+    margin-top: 5vh;
+}
+
+#connect-div > div:nth-of-type(2) > div > a {
+    color: #000;
+    text-decoration: none;
+}
+
+@media screen and (orientation: portrait) {
+    #connect-div > div:nth-of-type(2) {
+        flex-direction: column;
+    }
+}
+/* Footer */
+footer > p {
+    text-align: center;
+    color: #fff;
+    font-size: 0.8em;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
 /* Others */
 .hidden {
     display: none;
 }
+
