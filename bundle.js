@@ -7,6 +7,18 @@ const Project= require('./project.js');
 // General 
 const isLandscape = () => window.innerWidth > window.innerHeight;
 const scrollTo = element => isLandscape() ? element.scrollIntoView(false) : element.scrollIntoView(true);
+const goToPage = () => {
+    const page = location.hash;
+    if (page == '#' || page == '#home') {
+        scrollTo(homeDiv);
+    } else if (location.hash == '#work') {
+        scrollTo(allContentDiv[0]);
+    } else if (location.hash == '#about') {
+        scrollTo(allContentDiv[1]);
+    } else {
+        scrollTo(allContentDiv[2]);
+    }
+}
 
 // For navigation
 const dropdownMenu = document.getElementById('dropdown-menu');
@@ -71,6 +83,7 @@ for (let i in files) {
 // General
 const body = document.querySelector('body');
 body.onresize = toCloseMenu;
+window.onloadend = goToPage;
 
 // For navigation
 const allButtons = document.getElementsByClassName('button');
@@ -126,16 +139,20 @@ module.exports = class Project {
         this.preImage = '<div class="project-img"><img src="images/' + this.name + '/';
         this.postImage = '.png"/></div>';
         // !!! shall I change this?
-        this.github = '<div class="view-code"><a href="">View Code <img src="vectors/github.svg"/></a></div>';
+        this.githubStart = '<div class="view-code"><a href="' 
+        this.githubEnd = '">View Code <img src="vectors/github.svg"/></a></div>';
+        this.github = '';
         this.text = [];
         this.title = '';
         this.length = 0;
+        this.link = '';
         fetch(mainURL + '/json/' + name + '.json')
             .then(response => response.json())
             .then(data => {
                 this.length = data.length;
                 this.text.push(...data.text);
                 this.title = data.title;
+                this.link = data.link;
                 if (this.length == 0) {
                     throw "this.length is 0";
                 } else if (this.text.length == 0) {
@@ -143,6 +160,7 @@ module.exports = class Project {
                 } else if (this.title.length == 0) {
                     throw "No title received";
                 }
+                this.github = this.githubStart + this.link + this.githubEnd;
                 this.generateElements();
             })
             .catch(err => console.error('Parsing of .json was unsuccessful: ' + err));
