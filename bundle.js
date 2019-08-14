@@ -9,6 +9,7 @@ const isLandscape = () => window.innerWidth > window.innerHeight;
 const scrollTo = element => isLandscape() ? element.scrollIntoView(false) : element.scrollIntoView(true);
 const goToPage = () => {
     const page = location.hash;
+    console.log(page);
     if (page == '#' || page == '#home') {
         scrollTo(homeDiv);
     } else if (location.hash == '#work') {
