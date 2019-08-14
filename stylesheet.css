@@ -37,6 +37,33 @@ body > div, nav {
     margin-top: 20vh;
 }
 
+@media screen and (max-height: 600px) {
+    .content {
+        padding: 2vh 5vw;
+        height: 80vh;
+    }
+    .header {
+        margin-top: 10px;
+    }
+    .header > h1 {
+        font-size: 1.8em;
+    }
+}
+
+@media screen and (max-height: 420px) {
+    .header {
+        margin-top: 5px;
+        margin-left: 0px;
+    }
+    .content {
+        padding: 0vh 5vw;
+        height: 83vh;
+    }
+    .header > h1 {
+        font-size: 1.5em;
+    }
+}
+
 /* Styling for nav bar */
 nav {
     position: fixed;
@@ -45,6 +72,7 @@ nav {
     height: 10vh;
     padding: 2vh 2vw 1.2vh 2vw;
     background-color: #000;
+    z-index: 1;
 }
 
 @media screen and (orientation: portrait) {
@@ -55,6 +83,7 @@ nav {
 
 #logo {
     flex-grow: 3;
+    padding: 1vh;
 }
 
 #logo > a > img {
@@ -76,8 +105,9 @@ nav {
 #nav-elements > li > a {
     text-decoration: none;
     font-size: 1.7em;
-    padding: 1vw;
+    padding: 1vh 0.5vw;
     color: #fff;
+    margin-right: 10px;
 }
 
 #nav-elements > li > a:visited {
@@ -86,6 +116,7 @@ nav {
 
 #nav-elements > li > a:hover {
     border: 1px solid #fff;
+    
 }
 
 #menu {
@@ -150,6 +181,27 @@ nav {
     }
 }
 
+@media screen and (max-height: 600px) {
+    nav {
+        padding: 1vh 2vw 0.6vh 2vw;
+        height: 15vh;
+    }
+}
+
+@media screen and (max-height: 420px) {
+    nav {
+        padding: 1vh 2vw 1vh 2vw;
+    }
+    #logo > a > img {
+        height: 40px;
+        width: 40px;
+    }
+    #nav-elements-small > li {
+        padding: 10px;
+        font-size: 1em;
+    }
+}
+
 /* Styling for home page */
 #home-div {
     height: 89vh;
@@ -186,6 +238,42 @@ nav {
     text-decoration: underline;
 }
 
+@media screen and (max-height: 600px) {
+    #home-div {
+        padding: 6vh 1vw 3vh 1vw;
+        height: 92vh;
+    }
+    #greeting > p {
+        font-size: 9em;
+        margin-bottom: 88px;
+        line-height: 0px;
+    }
+}
+
+@media screen and (max-height: 400px) {
+    #greeting > p {
+        font-size: 8em;
+    }
+    #intro {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-height: 390px) {
+    #home-div {
+        padding: 4vh 1vw 3vh 1vw;
+        height: 94vh;
+    }
+    #greeting > p {
+        font-size: 5em;
+        margin-bottom: 80px;
+        line-height: 0px;
+    }
+    #intro {
+        font-size: 1.1em;
+    }
+}
+
 /* Styling for work page */
 #work-div {
     flex-direction: column;
@@ -202,15 +290,16 @@ nav {
 
 .project {
     flex-grow: 1;
-    margin: 0px 2vw;
+    margin: 30px 2vw 0px 2vw;
     text-align: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .project-name {
-    height: 24vw;
-    width: 24vw;
+    height: 22vw;
+    width: 22vw;
     border: 1px solid #000;
     display: flex;
 }
@@ -225,7 +314,7 @@ nav {
 
 .project-name > p {
     font-family: 'Playfair Display', serif; 
-    font-size: 5vw;
+    font-size: 4.5vw;
     align-self: center;
     margin: auto;
 }
@@ -238,17 +327,43 @@ nav {
 .summary > p {
     font-size: 1em;
     line-height: 1em;
+    margin: 10px;
 }
 
-.summary > p:nth-of-type(1) {
-    flex-grow: 4;
-    text-align: left;
+/* try using aspect ratio */
+@media screen and (max-height: 600px) and (min-aspect-ratio: 5/3) {
+    .project-name {
+        height: 33vh;
+        width: 32vh;
+        margin: 20px 0px 0px 0px;
+    }
+    .project-name > p {
+        font-size: 10vh;
+    }
+}
+@media screen and (max-height: 600px) and (min-aspect-ratio: 3/2) {
+    .project-name {
+        margin-top: 20px;
+        height: 45vh;
+        width: 45vh;
+    }
+    .project-name > p {
+        font-size: 9.5vh;
+    }
 }
 
-.summary > p:nth-of-type(2) {
-    flex-grow: 1;
-    text-align: right;
-}
+@media screen and (max-height: 415px) and (max-width: 675px) {
+    .project-name {
+        height: 35vh;
+        width: 35vh;
+    }
+    .project-name > p {
+        font-size: 7vh;
+    }
+    #projects {
+        margin-left: 15px;
+    }
+}   
 
 @media screen and (orientation: portrait) {
     #work-div {
@@ -271,7 +386,6 @@ nav {
         flex-direction: column;
     }
     .summary > p:nth-last-of-type(1) {
-        text-align: left;
         margin-top: 0px;
     }
 }
