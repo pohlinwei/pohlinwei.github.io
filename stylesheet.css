@@ -2,6 +2,7 @@
 html, body {
     padding: 0px;
     margin: 0px;
+    overflow-x: hidden;
 }
 
 body {
@@ -102,6 +103,7 @@ nav {
     flex-direction: row;
     flex-grow: 1;
     justify-content: flex-end;
+    margin-right: 30px;
 }
 
 #nav-elements > li, #nav-elements-small > li {
@@ -565,4 +567,3 @@ footer > p {
 .hidden {
     display: none;
 }
-
