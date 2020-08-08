@@ -1,0 +1,21 @@
+[X] Create template for project
+[X] Create image template
+[X] Update Project.py to include image folder
+[X] Fill images --> PageCreator.py
+[X] Refactor prefix
+[X] refactor templates
+
+[X] try with zeitraum
+[X] refactor
+    - tidy up script.js (30 min)
+[X] test 
+[X] close tabs and add comments
+[X] Make arrow buttons work
+    - 45 min
+[X] Animation
+    - 30 min
+
+[X] create inputs 
+[] Make read only
+[] Sort by date
+[] Write readme

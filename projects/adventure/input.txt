@@ -1,0 +1,16 @@
+###NAME###
+Adventure
+###IMAGE###
+###SUMMARY###
+A Tumblr theme that is good for text-heavy content.
+###DESCRIPTION###
+###TOOLS###
+HTML
+###DATE###
+Winter 2017
+###PAGE###
+projects/adventure.html
+###SCREENSHOTS###
+adventure
+###GITHUB###
+https://github.com/pohlinwei/Adventure

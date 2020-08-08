@@ -1,0 +1,16 @@
+###NAME###
+AComPianist
+###IMAGE###
+###SUMMARY###
+An interactive computer pianist.
+###DESCRIPTION###
+###TOOLS###
+TypeScript, Python, CSS, HTML
+###DATE###
+Summer 2019
+###PAGE###
+projects/acompianist.html
+###SCREENSHOTS###
+acompianist
+###GITHUB###
+https://github.com/pohlinwei/AComPianist
